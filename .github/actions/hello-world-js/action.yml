@@ -1,0 +1,12 @@
+#.github/actions/hello-world-js/action.yml
+
+name: 'JS Hello World'
+description: 'Saluda usando el binario de Node'
+inputs:
+  who-to-greet:
+    description: 'A quién saludar'
+    required: true
+    default: 'Odon'
+runs:
+  using: 'node20'
+  main: 'index.js'

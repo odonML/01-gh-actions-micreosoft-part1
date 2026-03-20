@@ -1,0 +1,13 @@
+#.github/actions/setup-and-clean/action.yml
+
+name: 'Setup and Clean'
+description: 'Instala dependencias y limpia archivos temporales'
+runs:
+  using: "composite"
+  steps:
+    - name: Install Dependencies
+      run: npm install
+      shell: bash
+    - name: Clean Build Folder
+      run: rm -rf dist
+      shell: bash
