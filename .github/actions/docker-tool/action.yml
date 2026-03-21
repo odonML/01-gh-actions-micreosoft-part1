@@ -1,6 +1,13 @@
 #.github/actions/docker-tool/action.yml
 name: 'Docker Tool'
 description: 'Corre un script dentro de un contenedor Linux'
+inputs:
+  who-to-greet:
+    description: "Nombre"
+    required: true
+
 runs:
   using: 'docker'
   image: 'Dockerfile' # GitHub buscará el Dockerfile en esta misma carpeta
+  args:
+    - ${{ inputs.who-to-greet }}

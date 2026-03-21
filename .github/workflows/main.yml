@@ -23,3 +23,5 @@ jobs:
       # 3. Usando la de Docker
       - name: Use Docker Action
         uses: ./.github/actions/docker-tool
+        with:
+          who-to-greet: 'Odon'
