@@ -1,0 +1,14 @@
+name: 04 workflow dispatch
+on:
+    workflow_dispatch:
+        inputs:
+            name:
+                description: "Nombre"
+                required: true
+                default: "warning"
+jobs:
+    say-hi:
+        runs-on: ubuntu-latest
+        steps:
+            - name: say hi
+              run: echo "hola ${{inputs.name}}"
