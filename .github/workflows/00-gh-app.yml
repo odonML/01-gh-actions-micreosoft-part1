@@ -1,0 +1,43 @@
+name: PR Label Enforcer
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize]
+
+jobs:
+  enforce-labels:
+    runs-on: ubuntu-latest
+    steps:
+      # PASO 1: Generar el token dinámico de la App (Dura 1 hora)
+      - name: Generate Token (Official)
+        id: generate_token_official
+        uses: actions/create-github-app-token@v3
+        with:
+            app-id: ${{ secrets.APP_ID }}
+            private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      # PASO 2: Lógica de cierre de PR
+      - name: Check Labels and Close
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.generate_token_official.outputs.token }}
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = pr.labels;
+
+            if (labels.length === 0) {
+              // Comentar por qué se cierra
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                body: "🚫 **PR Cerrado Automáticamente:** Este repositorio requiere al menos una etiqueta (label) para procesar los cambios. Por favor, asigna una etiqueta y vuelve a abrir el PR."
+              });
+
+              // Cerrar el PR
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                state: "closed"
+              });
+            }
