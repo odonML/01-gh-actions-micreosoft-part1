@@ -1,0 +1,11 @@
+name: 05 webhook event
+
+on:
+    repository_dispatch:
+        types: [say_hi_event]
+jobs:
+    say-hi:
+        runs-on: ubuntu-latest
+        steps:
+            - name: say hi
+              run: echo "Hola ${{github.event.client_payload.name}}"
