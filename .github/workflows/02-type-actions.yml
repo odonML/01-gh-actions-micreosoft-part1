@@ -1,4 +1,4 @@
-name: types actions
+name: "02 type actions"
 on:
     push:
         branches:
