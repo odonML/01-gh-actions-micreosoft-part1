@@ -2,7 +2,7 @@ name: "03 schedule event"
 
 on:
     schedule:
-        - cron: '15 1 22 3 0'
+        - cron: '21 1 22 3 *'
 jobs:
     say-hi:
         runs-on: ubuntu
